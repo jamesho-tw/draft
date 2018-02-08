@@ -47,12 +47,12 @@ PN532
 
 ## Install the MFRC522 library
 
-Using the [Arduino IDE](http://www.arduino.cc/en/main/software), the library can be easily installed by click `Sketch`  `Include Library` `Manage Libraries...` and search for `MFRC522`.
+Using the [Arduino IDE](http://www.arduino.cc/en/main/software), the library can be easily installed by click `Sketch` `Include Library` `Manage Libraries...` and search for `MFRC522`.
 
 
 ## Install the PN522 library
 
-Download the [PN522 Library](https://github.com/elechouse/PN532)
+Download the [PN522 Library](https://github.com/elechouse/PN532/archive/PN532_HSU.zip). Using the [Arduino IDE](http://www.arduino.cc/en/main/software), click `Sketch` `Include Library` `Add .ZIP Library...` into libraries of Arduino.
 
 
 ## Reference
