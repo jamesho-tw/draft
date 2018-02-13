@@ -24,6 +24,10 @@ public class Role implements Serializable {
   private Long creationTime;
   private Long lastModifiedTime;
 
+  public Role(String name) {
+    this.name = name;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)

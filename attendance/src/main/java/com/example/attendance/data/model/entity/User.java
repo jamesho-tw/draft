@@ -1,6 +1,8 @@
 package com.example.attendance.data.model.entity;
 
 import com.example.attendance.core.utils.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -16,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,6 +43,7 @@ public class User implements Serializable {
   private Long creationTime;
   private Long lastModifiedTime;
   private Set<Role> roles;
+  private Set<Token> tokens;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +65,7 @@ public class User implements Serializable {
     this.username = username;
   }
 
+  @JsonIgnore
   @Column(name = "secret", nullable = false, length = 512)
   public String getPassword() {
     return password;
@@ -89,6 +94,7 @@ public class User implements Serializable {
     this.gender = gender;
   }
 
+  @JsonProperty("birth_date")
   @Temporal(TemporalType.DATE)
   @Column(name = "birth_date")
   public Date getBirthDate() {
@@ -99,6 +105,7 @@ public class User implements Serializable {
     this.birthDate = birthDate;
   }
 
+  @JsonIgnore
   @Type(type = "org.hibernate.type.NumericBooleanType")
   @Column(name = "must_change_secret", nullable = false)
   public boolean isMustChangePassword() {
@@ -119,6 +126,7 @@ public class User implements Serializable {
     this.enabled = enabled;
   }
 
+  @JsonProperty("created")
   @Column(name = "created_unix", nullable = false)
   public Long getCreationTime() {
     return creationTime;
@@ -128,6 +136,7 @@ public class User implements Serializable {
     this.creationTime = creationTime;
   }
 
+  @JsonProperty("modified")
   @Column(name = "modified_unix")
   public Long getLastModifiedTime() {
     return lastModifiedTime;
@@ -150,6 +159,16 @@ public class User implements Serializable {
 
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
+  }
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  public Set<Token> getTokens() {
+    return tokens;
+  }
+
+  public void setTokens(Set<Token> tokens) {
+    this.tokens = tokens;
   }
 
 }

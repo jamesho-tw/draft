@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     logger.debug(String.format("Username: %s", username));
-    com.example.attendance.data.model.entity.User user = userRepository.findOne(1l);
+    com.example.attendance.data.model.entity.User user = userRepository.findByUsername(username);
     if (user == null) {
       throw new UsernameNotFoundException("User not found");
     }
@@ -33,15 +33,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       throw new UsernameNotFoundException("Inactive user");
     }
     UserBuilder builder = User.withUsername(user.getUsername());
-    builder.password("");
-    builder.accountExpired(true);
-    builder.accountLocked(true);
-    builder.credentialsExpired(true);
-//    String[] authorities = user.getRoles().stream().map(a -> a.getName()).toArray(String[]::new);
-    builder.authorities(new String[]{"a"});
-    UserDetails u = builder.build();
-    logger.info(u.toString());
-    return u;
+    builder.password(user.getPassword());
+    builder.accountExpired(false);
+    builder.accountLocked(false);
+    builder.credentialsExpired(false);
+    // TODO: authorities
+    // String[] authorities = user.getRoles().stream().map(a -> a.getName()).toArray(String[]::new);
+    builder.authorities(new String[]{"ROLE_ADMIN"});
+    return builder.build();
   }
 
 }

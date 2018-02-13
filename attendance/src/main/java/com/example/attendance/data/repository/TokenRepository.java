@@ -1,10 +1,11 @@
 package com.example.attendance.data.repository;
 
+import com.example.attendance.data.model.entity.Token;
 import com.example.attendance.data.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface TokenRepository extends JpaRepository<Token, String> {
 
-  public User findByUsername(String username);
+  public Token findByUser(User user);
 
 }
