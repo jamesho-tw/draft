@@ -45,6 +45,20 @@ public class User implements Serializable {
   private Set<Role> roles;
   private Set<Token> tokens;
 
+  public User() {
+  }
+
+  public User(String username, String password, String avatar, Gender gender, Date birthDate,
+      boolean mustChangePassword, boolean enabled) {
+    this.username = username;
+    this.password = password;
+    this.avatar = avatar;
+    this.gender = gender;
+    this.birthDate = birthDate;
+    this.mustChangePassword = mustChangePassword;
+    this.enabled = enabled;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
@@ -169,6 +183,24 @@ public class User implements Serializable {
 
   public void setTokens(Set<Token> tokens) {
     this.tokens = tokens;
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+        "id=" + id +
+        ", username='" + username + '\'' +
+        ", password='" + password + '\'' +
+        ", avatar='" + avatar + '\'' +
+        ", gender=" + gender +
+        ", birthDate=" + birthDate +
+        ", mustChangePassword=" + mustChangePassword +
+        ", enabled=" + enabled +
+        ", creationTime=" + creationTime +
+        ", lastModifiedTime=" + lastModifiedTime +
+        ", roles=" + roles +
+        ", tokens=" + tokens +
+        '}';
   }
 
 }

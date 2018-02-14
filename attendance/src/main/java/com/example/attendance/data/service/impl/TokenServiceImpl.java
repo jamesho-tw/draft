@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-@Service()
+@Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class TokenServiceImpl implements TokenService {
 
