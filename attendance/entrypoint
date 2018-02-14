@@ -1,0 +1,17 @@
+#!/bin/sh
+
+SYS_DB_TYPE=mysql
+SYS_DB_DRIVER=com.mysql.jdbc.Driver
+SYS_DB_HOST=mysql
+SYS_DB_PORT=3306
+SYS_DB_NAME=att
+SYS_DB_USER=user
+SYS_DB_PASS=secret
+SYS_LOG_PATH=/var/log/himalaya/otimecare/api/resource
+
+java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app/api.jar \
+--spring.datasource.driver-class-name=$SYS_DB_DRIVER \
+--spring.datasource.url="jdbc:$SYS_DB_TYPE://$SYS_DB_HOST:$SYS_DB_PORT/$SYS_DB_NAME?autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8" \
+--spring.datasource.username=$SYS_DB_USER \
+--spring.datasource.password=$SYS_DB_PASS \
+--logging.path=$SYS_LOG_PATH
