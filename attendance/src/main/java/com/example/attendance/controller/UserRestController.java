@@ -27,21 +27,28 @@ public class UserRestController {
   @Autowired
   private UserService userService;
 
-  // TODO: Create
+  // create new user
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<?> createUser(@RequestBody UserRequest userRequest) {
     User user = convert(userRequest);
 
+    // check if exists
+    if (userService.loadUserByUsername(user.getUsername()) != null) {
+      return new ResponseEntity<String>("{\"message\":\"'Account already exists\"}",
+          HttpStatus.CONFLICT);
+    }
+
     // save
     user = userService.createUser(user);
     if (user == null) {
-      return new ResponseEntity<String>("{}", HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<String>("{\"message\":\"error\"}",
+          HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<User>(user, HttpStatus.CREATED);
   }
 
-  // retrieve user profile
+  // retrieve user profile by user ID
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<?> retrieveUserProfile(@PathVariable long userId) {
@@ -61,13 +68,16 @@ public class UserRestController {
     return new ResponseEntity<User>(user, HttpStatus.OK);
   }
 
-  // TODO: Partially Update
+  // partially update user profile
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/{id}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<?> updateUserProfile(@PathVariable long userId,
       @RequestBody UserRequest userRequest) {
     User user = convert(userRequest);
     user.setId(userId);
+    if (userRequest.isMustChangePassword() != null) {
+      user.setMustChangePassword(userRequest.isMustChangePassword());
+    }
 
     // save
     user = userService.updateUserProfile(user);
@@ -96,10 +106,14 @@ public class UserRestController {
     return new ResponseEntity<User>(user, HttpStatus.OK);
   }
 
-  // TODO: Delete
+  // TODO: delete user (inactive)
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<?> delete(@PathVariable long userId) {
+    User user = userService.loadUserById(userId);
+    if (user == null) {
+      return new ResponseEntity<String>("{}", HttpStatus.NOT_FOUND);
+    }
     return new ResponseEntity<String>("", HttpStatus.NO_CONTENT);
   }
 

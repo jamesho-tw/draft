@@ -14,6 +14,7 @@ public class UserRequest implements Serializable {
   private String avatar;
   private Gender gender;
   private Date birthDate;
+  private Boolean mustChangePassword;
   private boolean enabled;
 
   @NotBlank
@@ -58,6 +59,14 @@ public class UserRequest implements Serializable {
 
   public void setBirthDate(Date birthDate) {
     this.birthDate = birthDate;
+  }
+
+  public Boolean isMustChangePassword() {
+    return mustChangePassword;
+  }
+
+  public void setMustChangePassword(Boolean mustChangePassword) {
+    this.mustChangePassword = mustChangePassword;
   }
 
   public boolean isEnabled() {

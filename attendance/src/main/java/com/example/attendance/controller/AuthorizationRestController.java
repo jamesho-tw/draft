@@ -19,6 +19,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +47,7 @@ public class AuthorizationRestController {
   @Autowired
   private UserService userService;
 
-  // TODO: Create
+  // create access token
   @RequestMapping(value = "/token", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<?> createToken(
       @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization)
@@ -69,6 +70,20 @@ public class AuthorizationRestController {
 
     // create access token
     return getResponse(getAccessToken(tokenService.createToken(user)), HttpStatus.CREATED);
+  }
+
+  // TODO: revoking access token
+  @RequestMapping(value = "/token/revoke", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResponseEntity<?> revokeToken(
+      @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization)
+      throws ServletRequestBindingException {
+    if (!authorization.startsWith(String.format("%s ", BEARER_TYPE))) {
+      throw new ServletRequestBindingException("Invalid access token");
+    }
+    String accessToken = authorization.substring(BEARER_TYPE.length()).trim();
+    Token token = tokenService.loadToken(accessToken);
+    tokenService.revokeToken(token);
+    return new ResponseEntity<String>("", HttpStatus.NO_CONTENT);
   }
 
   private String[] extractAndDecodeHeader(String header) throws IOException {
