@@ -1,8 +1,12 @@
 package com.example.attendance.controller;
 
+import com.example.attendance.data.model.entity.Role;
 import com.example.attendance.data.model.entity.User;
 import com.example.attendance.data.model.vo.UserRequest;
+import com.example.attendance.data.service.RoleService;
 import com.example.attendance.data.service.UserService;
+import java.util.Arrays;
+import java.util.HashSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +31,22 @@ public class UserRestController {
   @Autowired
   private UserService userService;
 
+  @Autowired
+  private RoleService roleService;
+
   // create new user
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<?> createUser(@RequestBody UserRequest userRequest) {
     User user = convert(userRequest);
+
+    // set default role
+    if (user.getRoles() == null) {
+      Role role = getDefaultRole();
+      if (role != null) {
+        user.setRoles(new HashSet<Role>(Arrays.asList(role)));
+      }
+    }
 
     // check if exists
     if (userService.loadUserByUsername(user.getUsername()) != null) {
@@ -79,8 +94,8 @@ public class UserRestController {
 
     User user = convert(userRequest);
     user.setId(userId);
-    if (userRequest.isMustChangePassword() != null) {
-      user.setMustChangePassword(userRequest.isMustChangePassword());
+    if (userRequest.getMustChangePassword() != null) {
+      user.setMustChangePassword(userRequest.getMustChangePassword());
     }
 
     // save
@@ -130,6 +145,10 @@ public class UserRestController {
       return null;
     }
     return userService.loadUserByUsername(userDetails.getUsername());
+  }
+
+  private Role getDefaultRole() {
+    return roleService.loadRoleByName("ROLE_USER");
   }
 
   private User convert(UserRequest u) {

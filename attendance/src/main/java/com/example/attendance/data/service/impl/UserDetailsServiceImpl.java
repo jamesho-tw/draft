@@ -1,9 +1,15 @@
 package com.example.attendance.data.service.impl;
 
+import com.example.attendance.data.model.entity.Role;
 import com.example.attendance.data.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,10 +43,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     builder.accountExpired(false);
     builder.accountLocked(false);
     builder.credentialsExpired(false);
-    // TODO: authorities
-    // String[] authorities = user.getRoles().stream().map(a -> a.getName()).toArray(String[]::new);
-    builder.authorities(new String[]{"ROLE_ADMIN"});
+    builder.authorities(convert(user.getRoles()));
     return builder.build();
+  }
+
+  private List<? extends GrantedAuthority> convert(Collection<Role> roles) {
+    Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+    for (Role role : roles) {
+      authorities.add(new SimpleGrantedAuthority(role.getName()));
+    }
+    return (List<? extends GrantedAuthority>) authorities;
   }
 
 }

@@ -1,7 +1,9 @@
 package com.example.attendance.data.model.vo;
 
 import com.example.attendance.core.utils.enums.Gender;
+import com.example.attendance.data.model.entity.Role;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -16,6 +18,7 @@ public class UserRequest implements Serializable {
   private Date birthDate;
   private Boolean mustChangePassword;
   private boolean enabled;
+  private Collection<Role> roles;
 
   @NotBlank
   @Min(2)
@@ -61,7 +64,7 @@ public class UserRequest implements Serializable {
     this.birthDate = birthDate;
   }
 
-  public Boolean isMustChangePassword() {
+  public Boolean getMustChangePassword() {
     return mustChangePassword;
   }
 
@@ -75,6 +78,14 @@ public class UserRequest implements Serializable {
 
   public void setEnabled(boolean enabled) {
     this.enabled = enabled;
+  }
+
+  public Collection<Role> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(Collection<Role> roles) {
+    this.roles = roles;
   }
 
 }
