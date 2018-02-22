@@ -107,4 +107,16 @@ public class Role implements Serializable {
     this.lastModifiedTime = lastModifiedTime;
   }
 
+  @Override
+  public String toString() {
+    return "Role{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", description='" + description + '\'' +
+        ", enabled=" + enabled +
+        ", creationTime=" + creationTime +
+        ", lastModifiedTime=" + lastModifiedTime +
+        '}';
+  }
+
 }

@@ -1,6 +1,7 @@
 package com.example.attendance.data.model.vo;
 
 import com.example.attendance.core.utils.enums.Gender;
+import com.example.attendance.data.model.entity.Reader;
 import com.example.attendance.data.model.entity.Role;
 import java.io.Serializable;
 import java.util.Collection;
@@ -19,6 +20,7 @@ public class UserRequest implements Serializable {
   private Boolean mustChangePassword;
   private boolean enabled;
   private Collection<Role> roles;
+  private Collection<Reader> readers;
 
   @NotBlank
   @Min(2)
@@ -86,6 +88,14 @@ public class UserRequest implements Serializable {
 
   public void setRoles(Collection<Role> roles) {
     this.roles = roles;
+  }
+
+  public Collection<Reader> getReaders() {
+    return readers;
+  }
+
+  public void setReaders(Collection<Reader> readers) {
+    this.readers = readers;
   }
 
 }

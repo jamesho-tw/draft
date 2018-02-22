@@ -62,7 +62,7 @@ public class RoleRestController {
   // retrieve role details by role ID
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public ResponseEntity<?> retrieveRoleDetails(@PathVariable long roleId) {
+  public ResponseEntity<?> retrieveRoleDetails(@PathVariable("id") long roleId) {
     Role role = roleService.loadRoleById(roleId);
     if (role == null) {
       return new ResponseEntity<String>("{}", HttpStatus.NOT_FOUND);
@@ -73,7 +73,7 @@ public class RoleRestController {
   // partially update role details
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/{id}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public ResponseEntity<?> updateRoleDetails(@PathVariable long roleId,
+  public ResponseEntity<?> updateRoleDetails(@PathVariable("id") long roleId,
       @RequestBody Role roleRequest) {
     // TODO: role ID validation
 
@@ -91,7 +91,7 @@ public class RoleRestController {
   // TODO: delete role (inactive)
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public ResponseEntity<?> delete(@PathVariable long roleId) {
+  public ResponseEntity<?> delete(@PathVariable("id") long roleId) {
     Role role = roleService.loadRoleById(roleId);
     if (role == null) {
       return new ResponseEntity<String>("{}", HttpStatus.NOT_FOUND);

@@ -1,10 +1,12 @@
 package com.example.attendance.data.service.impl;
 
 import com.example.attendance.core.utils.enums.Gender;
+import com.example.attendance.data.model.entity.Reader;
 import com.example.attendance.data.model.entity.User;
 import com.example.attendance.data.repository.UserRepository;
 import com.example.attendance.data.service.UserService;
 import java.util.Date;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +87,19 @@ public class UserServiceImpl implements UserService {
     entity.setMustChangePassword(user.isMustChangePassword());
     entity.setEnabled(user.isEnabled());
     entity.setLastModifiedTime(System.currentTimeMillis());
+    entity.setRoles(user.getRoles());
+    Set<Reader> readers = user.getReaders();
+    if (readers != null) {
+      for (Reader reader : readers) {
+        if (reader.getCreationTime() == null) {
+          reader.setCreationTime(System.currentTimeMillis());
+        } else {
+          reader.setLastModifiedTime(System.currentTimeMillis());
+        }
+      }
+    }
+    entity.setReaders(readers);
+    logger.debug(String.format("%s", entity));
     return userRepository.saveAndFlush(entity);
   }
 

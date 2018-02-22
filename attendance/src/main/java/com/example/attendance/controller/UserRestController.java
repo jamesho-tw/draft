@@ -1,5 +1,6 @@
 package com.example.attendance.controller;
 
+import com.example.attendance.data.model.entity.Reader;
 import com.example.attendance.data.model.entity.Role;
 import com.example.attendance.data.model.entity.User;
 import com.example.attendance.data.model.vo.UserRequest;
@@ -66,7 +67,7 @@ public class UserRestController {
   // retrieve user profile by user ID
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public ResponseEntity<?> retrieveUserProfile(@PathVariable long userId) {
+  public ResponseEntity<?> retrieveUserProfile(@PathVariable("id") long userId) {
     // TODO: user ID validation
 
     User user = userService.loadUserById(userId);
@@ -88,7 +89,7 @@ public class UserRestController {
   // partially update user profile
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/{id}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public ResponseEntity<?> updateUserProfile(@PathVariable long userId,
+  public ResponseEntity<?> updateUserProfile(@PathVariable("id") long userId,
       @RequestBody UserRequest userRequest) {
     // TODO: user ID validation
 
@@ -96,6 +97,12 @@ public class UserRestController {
     user.setId(userId);
     if (userRequest.getMustChangePassword() != null) {
       user.setMustChangePassword(userRequest.getMustChangePassword());
+    }
+    if (userRequest.getRoles() != null) {
+      user.setRoles(new HashSet<Role>(userRequest.getRoles()));
+    }
+    if (userRequest.getReaders() != null) {
+      user.setReaders(new HashSet<Reader>(userRequest.getReaders()));
     }
 
     // save
@@ -128,7 +135,7 @@ public class UserRestController {
   // TODO: delete user (inactive)
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public ResponseEntity<?> delete(@PathVariable long userId) {
+  public ResponseEntity<?> delete(@PathVariable("id") long userId) {
     User user = userService.loadUserById(userId);
     if (user == null) {
       return new ResponseEntity<String>("{}", HttpStatus.NOT_FOUND);

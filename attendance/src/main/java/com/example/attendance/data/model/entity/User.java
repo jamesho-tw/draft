@@ -43,7 +43,9 @@ public class User implements Serializable {
   private Long creationTime;
   private Long lastModifiedTime;
   private Set<Role> roles;
+  private Set<Reader> readers;
   private Set<Token> tokens;
+  private Set<Record> records;
 
   public User() {
   }
@@ -175,6 +177,21 @@ public class User implements Serializable {
     this.roles = roles;
   }
 
+  @ManyToMany(targetEntity = Reader.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JoinTable(
+      name = "related_users_readers",
+      joinColumns = @JoinColumn(name = "user_id", unique = false),
+      inverseJoinColumns = @JoinColumn(name = "read_id", unique = false),
+      uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "read_id"})
+  )
+  public Set<Reader> getReaders() {
+    return readers;
+  }
+
+  public void setReaders(Set<Reader> readers) {
+    this.readers = readers;
+  }
+
   @JsonIgnore
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   public Set<Token> getTokens() {
@@ -183,6 +200,16 @@ public class User implements Serializable {
 
   public void setTokens(Set<Token> tokens) {
     this.tokens = tokens;
+  }
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  public Set<Record> getRecords() {
+    return records;
+  }
+
+  public void setRecords(Set<Record> records) {
+    this.records = records;
   }
 
   @Override
@@ -199,7 +226,9 @@ public class User implements Serializable {
         ", creationTime=" + creationTime +
         ", lastModifiedTime=" + lastModifiedTime +
         ", roles=" + roles +
+        ", readers=" + readers +
         ", tokens=" + tokens +
+        ", records=" + records +
         '}';
   }
 
