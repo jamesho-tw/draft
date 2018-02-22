@@ -52,6 +52,8 @@ public class UserRestController {
   @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<?> retrieveUserProfile(@PathVariable long userId) {
+    // TODO: user ID validation
+
     User user = userService.loadUserById(userId);
     if (user == null) {
       return new ResponseEntity<String>("{}", HttpStatus.NOT_FOUND);
@@ -73,6 +75,8 @@ public class UserRestController {
   @RequestMapping(value = "/{id}", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<?> updateUserProfile(@PathVariable long userId,
       @RequestBody UserRequest userRequest) {
+    // TODO: user ID validation
+
     User user = convert(userRequest);
     user.setId(userId);
     if (userRequest.isMustChangePassword() != null) {

@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
       return null;
     }
     User entity = user;
+    entity.setId(null);
 
     // TOOD: validation password
     entity.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -83,6 +84,7 @@ public class UserServiceImpl implements UserService {
     entity.setBirthDate(user.getBirthDate());
     entity.setMustChangePassword(user.isMustChangePassword());
     entity.setEnabled(user.isEnabled());
+    entity.setLastModifiedTime(System.currentTimeMillis());
     return userRepository.saveAndFlush(entity);
   }
 

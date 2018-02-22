@@ -25,7 +25,25 @@ public class Role implements Serializable {
   private Long lastModifiedTime;
 
   public Role(String name) {
+    this(null, name, null, false, null, null);
+  }
+
+  public Role(String name, String description) {
+    this(null, name, description, true, null, null);
+  }
+
+  public Role(String name, String description, boolean enabled) {
+    this(null, name, description, enabled, null, null);
+  }
+
+  public Role(Long id, String name, String description, boolean enabled, Long creationTime,
+      Long lastModifiedTime) {
+    this.id = id;
     this.name = name;
+    this.description = description;
+    this.enabled = enabled;
+    this.creationTime = creationTime;
+    this.lastModifiedTime = lastModifiedTime;
   }
 
   @Id
