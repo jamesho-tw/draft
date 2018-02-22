@@ -24,6 +24,9 @@ public class Role implements Serializable {
   private Long creationTime;
   private Long lastModifiedTime;
 
+  public Role() {
+  }
+
   public Role(String name) {
     this(null, name, null, false, null, null);
   }
