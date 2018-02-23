@@ -1,6 +1,6 @@
 package com.example.attendance.controller;
 
-import com.example.attendance.data.model.entity.Reader;
+import com.example.attendance.data.model.entity.ProximityCard;
 import com.example.attendance.data.model.entity.Role;
 import com.example.attendance.data.model.entity.User;
 import com.example.attendance.data.model.vo.UserRequest;
@@ -101,8 +101,8 @@ public class UserRestController {
     if (userRequest.getRoles() != null) {
       user.setRoles(new HashSet<Role>(userRequest.getRoles()));
     }
-    if (userRequest.getReaders() != null) {
-      user.setReaders(new HashSet<Reader>(userRequest.getReaders()));
+    if (userRequest.getProximityCards() != null) {
+      user.setProximityCards(new HashSet<ProximityCard>(userRequest.getProximityCards()));
     }
 
     // save

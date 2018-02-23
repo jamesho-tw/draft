@@ -8,22 +8,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.Type;
 
 @Entity
-@Table(
-    name = "access_readers",
-    uniqueConstraints = @UniqueConstraint(columnNames = "pin_code")
-)
-public class Reader implements Serializable {
+@Table(name = "proximity_cards")
+public class ProximityCard implements Serializable {
 
+  // identification
+  // proximity cards and credentials
   private Long id;
-  private String pinCode;
-  private String type;
+  private String pin;
+  private String description;
+  private boolean enabled;
   private Long creationTime;
   private Long lastModifiedTime;
 
-  public Reader() {
+  public ProximityCard() {
   }
 
   @Id
@@ -37,23 +37,33 @@ public class Reader implements Serializable {
     this.id = id;
   }
 
-  @JsonProperty("pin")
-  @Column(name = "pin_code", length = 64)
-  public String getPinCode() {
-    return pinCode;
+  @Column(name = "pin", length = 64)
+  public String getPin() {
+    return pin;
   }
 
-  public void setPinCode(String pinCode) {
-    this.pinCode = pinCode;
+  public void setPin(String pin) {
+    this.pin = pin;
   }
 
-  @Column(name = "device_type", length = 32)
-  public String getType() {
-    return type;
+  @Type(type = "text")
+  @Column(name = "description")
+  public String getDescription() {
+    return description;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  @Type(type = "org.hibernate.type.NumericBooleanType")
+  @Column(name = "is_active", nullable = false)
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 
   @JsonProperty("created")

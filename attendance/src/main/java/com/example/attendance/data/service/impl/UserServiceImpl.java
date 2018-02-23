@@ -1,11 +1,9 @@
 package com.example.attendance.data.service.impl;
 
-import com.example.attendance.core.utils.enums.Gender;
-import com.example.attendance.data.model.entity.Reader;
+import com.example.attendance.data.model.entity.ProximityCard;
 import com.example.attendance.data.model.entity.User;
 import com.example.attendance.data.repository.UserRepository;
 import com.example.attendance.data.service.UserService;
-import java.util.Date;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,17 +86,17 @@ public class UserServiceImpl implements UserService {
     entity.setEnabled(user.isEnabled());
     entity.setLastModifiedTime(System.currentTimeMillis());
     entity.setRoles(user.getRoles());
-    Set<Reader> readers = user.getReaders();
-    if (readers != null) {
-      for (Reader reader : readers) {
-        if (reader.getCreationTime() == null) {
-          reader.setCreationTime(System.currentTimeMillis());
+    Set<ProximityCard> cards = user.getProximityCards();
+    if (cards != null) {
+      for (ProximityCard card : cards) {
+        if (card.getCreationTime() == null) {
+          card.setCreationTime(System.currentTimeMillis());
         } else {
-          reader.setLastModifiedTime(System.currentTimeMillis());
+          card.setLastModifiedTime(System.currentTimeMillis());
         }
       }
     }
-    entity.setReaders(readers);
+    entity.setProximityCards(cards);
     logger.debug(String.format("%s", entity));
     return userRepository.saveAndFlush(entity);
   }

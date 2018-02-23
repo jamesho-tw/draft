@@ -19,6 +19,7 @@
 | Retrieve User Profile         | `GET`    | /users           | `BASIC_USER` | `BETA` |
 | Partially Update User Profile | `PATCH`  | /users           | `BASIC_USER` | `BETA` |
 
+
 ## Role APIs
 
 | ITEM                          | METHOD   | ENDPOINTS        | ROLE    | STATUS |
@@ -28,4 +29,13 @@
 | Retrieve Role Details         | `GET`    | /role/{role_id}  | `ADMIN` | `BETA` |
 | Partially Update Role Details | `PATCH`  | /roles/{role_id} | `ADMIN` | `BETA` |
 | Delete Role `Inactive`        | `DELETE` | /roles/{role_id} | `ADMIN` | `TODO` |
+
+
+##  Proximity Card APIs
+
+| ITEM            | METHOD | ENDPOINTS | ROLE | STATUS |
+| --------------- | ------ | --------- | ---- | ------ |
+| Create New Card |        |           |      |        |
+|                 |        |           |      |        |
+|                 |        |           |      |        |
 

@@ -43,7 +43,7 @@ public class User implements Serializable {
   private Long creationTime;
   private Long lastModifiedTime;
   private Set<Role> roles;
-  private Set<Reader> readers;
+  private Set<ProximityCard> proximityCards;
   private Set<Token> tokens;
   private Set<Record> records;
 
@@ -177,19 +177,20 @@ public class User implements Serializable {
     this.roles = roles;
   }
 
-  @ManyToMany(targetEntity = Reader.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonProperty("cards")
+  @ManyToMany(targetEntity = ProximityCard.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinTable(
-      name = "related_users_readers",
+      name = "related_users_proximity_cards",
       joinColumns = @JoinColumn(name = "user_id", unique = false),
-      inverseJoinColumns = @JoinColumn(name = "read_id", unique = false),
-      uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "read_id"})
+      inverseJoinColumns = @JoinColumn(name = "card_id", unique = false),
+      uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "card_id"})
   )
-  public Set<Reader> getReaders() {
-    return readers;
+  public Set<ProximityCard> getProximityCards() {
+    return proximityCards;
   }
 
-  public void setReaders(Set<Reader> readers) {
-    this.readers = readers;
+  public void setProximityCards(Set<ProximityCard> proximityCards) {
+    this.proximityCards = proximityCards;
   }
 
   @JsonIgnore
@@ -226,7 +227,7 @@ public class User implements Serializable {
         ", creationTime=" + creationTime +
         ", lastModifiedTime=" + lastModifiedTime +
         ", roles=" + roles +
-        ", readers=" + readers +
+        ", proximityCards=" + proximityCards +
         ", tokens=" + tokens +
         ", records=" + records +
         '}';

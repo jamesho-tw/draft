@@ -1,8 +1,9 @@
 package com.example.attendance.data.model.vo;
 
 import com.example.attendance.core.utils.enums.Gender;
-import com.example.attendance.data.model.entity.Reader;
+import com.example.attendance.data.model.entity.ProximityCard;
 import com.example.attendance.data.model.entity.Role;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -20,7 +21,7 @@ public class UserRequest implements Serializable {
   private Boolean mustChangePassword;
   private boolean enabled;
   private Collection<Role> roles;
-  private Collection<Reader> readers;
+  private Collection<ProximityCard> proximityCards;
 
   @NotBlank
   @Min(2)
@@ -58,6 +59,7 @@ public class UserRequest implements Serializable {
     this.gender = gender;
   }
 
+  @JsonProperty("birth_date")
   public Date getBirthDate() {
     return birthDate;
   }
@@ -66,6 +68,7 @@ public class UserRequest implements Serializable {
     this.birthDate = birthDate;
   }
 
+  @JsonProperty("must_change_password")
   public Boolean getMustChangePassword() {
     return mustChangePassword;
   }
@@ -90,12 +93,13 @@ public class UserRequest implements Serializable {
     this.roles = roles;
   }
 
-  public Collection<Reader> getReaders() {
-    return readers;
+  @JsonProperty("cards")
+  public Collection<ProximityCard> getProximityCards() {
+    return proximityCards;
   }
 
-  public void setReaders(Collection<Reader> readers) {
-    this.readers = readers;
+  public void setProximityCards(Collection<ProximityCard> proximityCards) {
+    this.proximityCards = proximityCards;
   }
 
 }
