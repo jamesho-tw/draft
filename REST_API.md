@@ -33,9 +33,11 @@
 
 ##  Proximity Card APIs
 
-| ITEM            | METHOD | ENDPOINTS | ROLE | STATUS |
-| --------------- | ------ | --------- | ---- | ------ |
-| Create New Card |        |           |      |        |
-|                 |        |           |      |        |
-|                 |        |           |      |        |
+| ITEM                  | METHOD   | ENDPOINTS        | ROLE    | STATUS |
+| --------------------- | -------- | ---------------- | ------- | ------ |
+| Create New Card       | `POST`   | /cards           | `ADMIN` | `BETA` |
+| Retrieve Cards        | `GET`    | /cards           | `ADMIN` | `BETA` |
+| Retrieve Card Details | `GET`    | /cards/{card_id} | `ADMIN` | `BETA` |
+| Partially Update Card | `PATCH`  | /cards/{card_id} | `ADMIN` | `BETA` |
+| Delete Card           | `DELETE` | /cards/{card_id} | `ADMIN` | `TODO` |
 

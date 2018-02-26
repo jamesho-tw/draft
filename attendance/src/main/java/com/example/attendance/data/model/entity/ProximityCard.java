@@ -8,14 +8,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name = "proximity_cards")
+@Table(
+    name = "proximity_cards",
+    uniqueConstraints = @UniqueConstraint(columnNames = "pin")
+)
 public class ProximityCard implements Serializable {
 
   // identification
   // proximity cards and credentials
+
   private Long id;
   private String pin;
   private String description;
@@ -24,6 +29,20 @@ public class ProximityCard implements Serializable {
   private Long lastModifiedTime;
 
   public ProximityCard() {
+  }
+
+  public ProximityCard(String pin, String description, boolean enabled) {
+    this(null, pin, description, enabled, null, null);
+  }
+
+  public ProximityCard(Long id, String pin, String description, boolean enabled,
+      Long creationTime, Long lastModifiedTime) {
+    this.id = id;
+    this.pin = pin;
+    this.description = description;
+    this.enabled = enabled;
+    this.creationTime = creationTime;
+    this.lastModifiedTime = lastModifiedTime;
   }
 
   @Id
@@ -37,7 +56,7 @@ public class ProximityCard implements Serializable {
     this.id = id;
   }
 
-  @Column(name = "pin", length = 64)
+  @Column(name = "pin", unique = true, nullable = false, length = 64)
   public String getPin() {
     return pin;
   }
