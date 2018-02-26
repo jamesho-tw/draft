@@ -68,6 +68,20 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public User loadUserByProximityCard(ProximityCard proximityCard) {
+    if (proximityCard == null) {
+      return null;
+    }
+    String pin = proximityCard.getPin();
+    if (!StringUtils.hasLength(StringUtils.trimWhitespace(pin))) {
+      logger.error(String.format("Invalid pin. Pin: %s", pin));
+      // TODO: throw exception
+      return null;
+    }
+    return userRepository.findByProximityCard(pin);
+  }
+
+  @Override
   @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
   public User updateUserProfile(User user) {
     if (user == null || user.getId() == null) {

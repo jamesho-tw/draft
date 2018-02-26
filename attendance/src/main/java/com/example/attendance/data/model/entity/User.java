@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -205,6 +206,7 @@ public class User implements Serializable {
 
   @JsonIgnore
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  @OrderBy("loggingTime")
   public Set<Record> getRecords() {
     return records;
   }

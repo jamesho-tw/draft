@@ -77,6 +77,7 @@ public class UserRestController {
     return new ResponseEntity<User>(user, HttpStatus.OK);
   }
 
+  @PreAuthorize("hasAuthority('ROLE_USER')")
   @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<?> retrieveUserProfile(Authentication authentication) {
     User user = getUser(authentication);
@@ -113,6 +114,7 @@ public class UserRestController {
     return new ResponseEntity<String>("{}", HttpStatus.OK);
   }
 
+  @PreAuthorize("hasAuthority('ROLE_USER')")
   @RequestMapping(value = "", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<?> updateUserProfile(Authentication authentication,
       @RequestBody UserRequest userRequest) {

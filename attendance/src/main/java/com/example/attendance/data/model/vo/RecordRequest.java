@@ -5,39 +5,18 @@ import java.io.Serializable;
 
 public class RecordRequest implements Serializable {
 
-  private String pinCode;
-  private String deviceTag;
-  private String deviceType;
+  private String pin;
   private Long loggingTime;
 
   public RecordRequest() {
   }
 
-  @JsonProperty("pin")
-  public String getPinCode() {
-    return pinCode;
+  public String getPin() {
+    return pin;
   }
 
-  public void setPinCode(String pinCode) {
-    this.pinCode = pinCode;
-  }
-
-  @JsonProperty("tag")
-  public String getDeviceTag() {
-    return deviceTag;
-  }
-
-  public void setDeviceTag(String deviceTag) {
-    this.deviceTag = deviceTag;
-  }
-
-  @JsonProperty("type")
-  public String getDeviceType() {
-    return deviceType;
-  }
-
-  public void setDeviceType(String deviceType) {
-    this.deviceType = deviceType;
+  public void setPin(String pin) {
+    this.pin = pin;
   }
 
   @JsonProperty("timestamp")
@@ -52,9 +31,7 @@ public class RecordRequest implements Serializable {
   @Override
   public String toString() {
     return "RecordRequest{" +
-        "pinCode='" + pinCode + '\'' +
-        ", deviceTag='" + deviceTag + '\'' +
-        ", deviceType='" + deviceType + '\'' +
+        "pin='" + pin + '\'' +
         ", loggingTime=" + loggingTime +
         '}';
   }

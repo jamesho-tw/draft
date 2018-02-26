@@ -10,14 +10,14 @@
 
 ## User APIs
 
-| ITEM                          | METHOD   | ENDPOINTS        | ROLE         | STATUS |
-| ----------------------------- | -------- | ---------------- | ------------ | ------ |
-| Create New User               | `POST`   | /users           | `ADMIN`      | `BETA` |
-| Retrieve User Profile         | `GET`    | /users/{user_id} | `ADMIN`      | `BETA` |
-| Partially Update User Profile | `PATCH`  | /users/{user_id} | `ADMIN`      | `BETA` |
-| Delete User `Inactive`        | `DELETE` | /users/{user_id} | `ADMIN`      | `TODO` |
-| Retrieve User Profile         | `GET`    | /users           | `BASIC_USER` | `BETA` |
-| Partially Update User Profile | `PATCH`  | /users           | `BASIC_USER` | `BETA` |
+| ITEM                          | METHOD   | ENDPOINTS        | ROLE    | STATUS |
+| ----------------------------- | -------- | ---------------- | ------- | ------ |
+| Create New User               | `POST`   | /users           | `ADMIN` | `BETA` |
+| Retrieve User Profile         | `GET`    | /users/{user_id} | `ADMIN` | `BETA` |
+| Partially Update User Profile | `PATCH`  | /users/{user_id} | `ADMIN` | `BETA` |
+| Delete User `Inactive`        | `DELETE` | /users/{user_id} | `ADMIN` | `TODO` |
+| Retrieve User Profile         | `GET`    | /users           | `USER`  | `BETA` |
+| Partially Update User Profile | `PATCH`  | /users           | `USER`  | `BETA` |
 
 
 ## Role APIs
@@ -40,4 +40,14 @@
 | Retrieve Card Details | `GET`    | /cards/{card_id} | `ADMIN` | `BETA` |
 | Partially Update Card | `PATCH`  | /cards/{card_id} | `ADMIN` | `BETA` |
 | Delete Card           | `DELETE` | /cards/{card_id} | `ADMIN` | `TODO` |
+
+
+## Attendance Record APIs
+
+| ITEM                               | METHOD | ENDPOINTS                | ROLE    | STATUS |
+| ---------------------------------- | ------ | ------------------------ | ------- | ------ |
+| Create New Record                  | `POST` | /records                 | `ROBOT` | `BETA` |
+| Retrieve Records By User           | `GET`  | /records/users/{user_id} | `ADMIN` | `BETA` |
+| Retrieve Records By Proximity Card | `GET`  | /records/cards/{card_id} | `ADMIN` | `BETA` |
+| Retrieve Records                   | `GET`  | /records                 | `USER`  | `BETA` |
 
